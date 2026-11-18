@@ -1,5 +1,87 @@
 {% extends "base.html" %}
+{% block title %}Dashboard | RoomCheck{% endblock %}
+
+{% block extra_css %}
+<style>
+  .welcome h2 { margin: 0 0 4px; font-size: 1.7rem; }
+  .welcome p { margin: 0; color: var(--muted); }
+  .search-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    margin: 24px 0;
+  }
+  .search-box h3 { margin: 0 0 12px; }
+  .search-row { display: flex; gap: 10px; }
+  .search-row input {
+    flex: 1;
+    padding: 11px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 1rem;
+    background: #f7f8fc;
+  }
+  .search-row .btn[disabled] { opacity: 0.55; cursor: not-allowed; }
+  .hint { color: var(--muted); font-size: 0.85rem; margin: 10px 0 0; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+  }
+  .card h4 { margin: 0 0 8px; font-size: 1.05rem; }
+  .card p { margin: 0 0 12px; color: var(--muted); font-size: 0.92rem; line-height: 1.45; }
+  .badge {
+    display: inline-block;
+    background: #eef1fd;
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+</style>
+{% endblock %}
+
 {% block content %}
-<h2>Welcome, {{ user.first_name|default:user.username }}!</h2>
-<p>This is your RoomCheck dashboard.</p>
+<div class="container">
+  <div class="welcome">
+    <h2>Welcome, {{ user.first_name|default:user.username }}!</h2>
+    <p>Today is {% now "l, F j, Y" %}. Find out which class is scheduled in a room.</p>
+  </div>
+
+  <div class="search-box">
+    <h3>Search a classroom</h3>
+    <div class="search-row">
+      <input type="text" placeholder="e.g. Room 301" disabled>
+      <button class="btn" disabled>Search</button>
+    </div>
+    <p class="hint">Room search is coming soon.</p>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <h4>Current Class</h4>
+      <p>See the class scheduled in a room right now, based on the current time.</p>
+      <span class="badge">Coming soon</span>
+    </div>
+    <div class="card">
+      <h4>Class Schedule</h4>
+      <p>View the course, day, start time, and end time for a classroom.</p>
+      <span class="badge">Coming soon</span>
+    </div>
+    <div class="card">
+      <h4>Room Status</h4>
+      <p>Check whether a class is currently scheduled in the room.</p>
+      <span class="badge">Coming soon</span>
+    </div>
+    <div class="card">
+      <h4>My Profile</h4>
+      <p>View your basic account information.</p>
+      <span class="badge">Coming soon</span>
+    </div>
+  </div>
+</div>
 {% endblock %}

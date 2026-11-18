@@ -1,9 +1,64 @@
 {% extends "base.html" %}
+{% block title %}Login | RoomCheck{% endblock %}
+{% block nav %}{% endblock %}
+
+{% block extra_css %}
+<style>
+  .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .login-card {
+    background: var(--card);
+    width: 100%;
+    max-width: 400px;
+    padding: 36px 32px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 30px rgba(47, 79, 216, 0.10);
+  }
+  .login-card h1 { margin: 0; text-align: center; color: var(--primary); font-size: 1.9rem; }
+  .tagline { text-align: center; color: var(--muted); margin: 6px 0 26px; font-size: 0.95rem; }
+  label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; }
+  input[type=text], input[type=password] {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 16px;
+  }
+  input:focus { outline: 2px solid var(--primary); border-color: transparent; }
+  .login-card .btn { width: 100%; }
+  .error {
+    background: #fdecec;
+    color: #b42318;
+    border: 1px solid #f5c2c0;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 0.9rem;
+  }
+</style>
+{% endblock %}
+
 {% block content %}
-<h2>Student Login</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Login</button>
-</form>
+<div class="login-wrap">
+  <div class="login-card">
+    <h1>RoomCheck</h1>
+    <p class="tagline">Check your classroom schedule before you go in.</p>
+
+    {% if form.errors %}
+      <div class="error">Incorrect username or password. Please try again.</div>
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+      <label for="id_username">Username</label>
+      <input type="text" name="username" id="id_username" autofocus required>
+
+      <label for="id_password">Password</label>
+      <input type="password" name="password" id="id_password" required>
+
+      <button type="submit" class="btn">Log in</button>
+    </form>
+  </div>
+</div>
 {% endblock %}

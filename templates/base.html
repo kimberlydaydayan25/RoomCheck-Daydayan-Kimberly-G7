@@ -1,20 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>RoomCheck</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}RoomCheck{% endblock %}</title>
+  <style>
+    :root {
+      --primary: #2f4fd8;
+      --primary-dark: #2340b5;
+      --bg: #f3f5fb;
+      --card: #ffffff;
+      --text: #1f2540;
+      --muted: #6b7290;
+      --border: #e1e5f2;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .navbar {
+      background: var(--primary);
+      color: #fff;
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .navbar a.brand { color: #fff; text-decoration: none; font-size: 1.3rem; font-weight: 700; }
+    .nav-right { display: flex; align-items: center; gap: 16px; font-size: 0.95rem; }
+    .btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 11px 18px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn:hover { background: var(--primary-dark); }
+    .btn-light { background: rgba(255,255,255,0.18); padding: 8px 14px; font-size: 0.9rem; }
+    .btn-light:hover { background: rgba(255,255,255,0.3); }
+    .container { max-width: 960px; margin: 32px auto; padding: 0 20px; }
+    @media (max-width: 600px) { .navbar { padding: 12px 16px; } }
+  </style>
+  {% block extra_css %}{% endblock %}
 </head>
 <body>
-  <nav>
-    <a href="{% url 'dashboard' %}">RoomCheck</a>
+  {% block nav %}
+  <header class="navbar">
+    <a class="brand" href="{% url 'dashboard' %}">RoomCheck</a>
     {% if user.is_authenticated %}
-      <form method="post" action="{% url 'logout' %}" style="display:inline">
+    <div class="nav-right">
+      <span>{{ user.get_full_name|default:user.username }}</span>
+      <form method="post" action="{% url 'logout' %}" style="margin:0">
         {% csrf_token %}
-        <button type="submit">Logout</button>
+        <button type="submit" class="btn btn-light">Logout</button>
       </form>
+    </div>
     {% endif %}
-  </nav>
-  <hr>
+  </header>
+  {% endblock %}
+
   {% block content %}{% endblock %}
 </body>
 </html>
